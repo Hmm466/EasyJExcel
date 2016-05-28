@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import jxl.Cell;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.format.Colour;
 import jxl.write.Label;
 import jxl.write.WritableCellFormat;
@@ -36,6 +37,8 @@ public class JEasyExcel {
 	 */
 	public boolean open(File file)
 	{
+		if(null!= sheet)
+			colseExcel();
 		try
 		{
 			//由于jxl 打开之后文件是0 kb 所以如果该文件存在
@@ -418,4 +421,53 @@ public class JEasyExcel {
 		}
 		return row;
 	}
+	/**
+	 * 设置工作簿密码
+	 * @param password 密码
+	 * @return
+	 */
+	public void setWorkPassword(String password){
+		if(null != sheet)
+			sheet.getSettings().setPassword(password);
+	}
+	
+	/**
+	 * 设置Sheet
+	 * @param index
+	 * @return
+	 */
+	public void setSheet(int index){
+		sheet = workbook.getSheet(index);
+	}
+	/**
+	 * 设置Sheet
+	 * @param sheetName
+	 * @return
+	 */
+	public void setSheet(String sheetName){
+		sheet = workbook.getSheet(sheetName);
+	}
+	
+
+	/**
+	 * 设置Sheet
+	 * @param index
+	 * @param passwd
+	 * @return
+	 */
+	public void setSheet(int index,String passwd){
+		sheet = workbook.getSheet(index);
+		sheet.getSettings().setPassword(passwd);
+	}
+	/**
+	 * 设置Sheet
+	 * @param index
+	 * @param passwd
+	 * @return
+	 */
+	public void setSheet(String sheetName,String passwd){
+		sheet = workbook.getSheet(sheetName);
+		sheet.getSettings().setPassword(passwd);
+	}
+	
 }
