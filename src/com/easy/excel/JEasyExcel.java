@@ -136,9 +136,9 @@ public class JEasyExcel {
 	 * @param sheetName
 	 *            sheet名称
 	 * @param col
-	 *            横坐标
+	 *           纵坐标 坐标从0开始
 	 * @param row
-	 *            纵坐标
+	 *           横坐标 坐标从0开始
 	 * @param value
 	 *            值
 	 * @return false 写入失败 true 写入成功
@@ -168,9 +168,10 @@ public class JEasyExcel {
 	 * @param sheetIndex
 	 *            sheet坐标
 	 * @param col
-	 *            横坐标
+	 *            纵坐标 坐标从0开始
 	 * @param row
-	 *            纵坐标
+	 *           
+	 *            横坐标 坐标从0开始
 	 * @param value
 	 *            值
 	 * @return false 写入成功 true 写入失败
@@ -306,7 +307,7 @@ public class JEasyExcel {
 		}
 		return col;
 	}
-
+	
 	/**
 	 * 判断Sheet 的第几行0坐标是空的
 	 * 
@@ -377,6 +378,31 @@ public class JEasyExcel {
 		while (true) {
 			try {
 				cell = sheet.getCell(0, row);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return row;
+			}
+
+			if (cell.getContents() == null || cell.getContents() == "")
+				break;
+			row++;
+		}
+		return row;
+	}
+	/**
+	 * 判断Excel 中第几个纵坐标为空
+	 * @param sheetName
+	 * @param col 纵坐标  从0 开始 也就是A 为0 
+	 * @return
+	 */
+	public int isSheetRowisNull(String sheetName,int col) {
+		sheet = workbook.getSheet(sheetName);
+		int row = 0;
+		Cell cell = null;
+		while (true) {
+			try {
+				cell = sheet.getCell(col, row);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
