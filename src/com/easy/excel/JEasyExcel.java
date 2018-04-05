@@ -29,11 +29,6 @@ public class JEasyExcel {
 	private boolean isFileExists = false;
 
 	private File excelFile = null, copyFile = null;
-	
-	/**
-	 * 系统分隔符.用于区分是windows 还是linux 
-	 */
-	public static String SYSTEM_PATH_SEPARTOR = System.getProperty("file.separator") ;
 
 	/**
 	 * 打开excel 如果存在则打开，不存在则创建并打开
@@ -58,11 +53,11 @@ public class JEasyExcel {
 				FileUtils.copyFile(
 						excelFile.getAbsolutePath(),
 						excelFile.getAbsolutePath().substring(0,
-								excelFile.getAbsolutePath().lastIndexOf(SYSTEM_PATH_SEPARTOR))
-								+ SYSTEM_PATH_SEPARTOR + "copyExcel.xls");
+								excelFile.getAbsolutePath().lastIndexOf("/"))
+								+ "/copyExcel.xls");
 				copyFile = new File(excelFile.getAbsolutePath().substring(0,
-						excelFile.getAbsolutePath().lastIndexOf(SYSTEM_PATH_SEPARTOR))
-						+ SYSTEM_PATH_SEPARTOR+ "copyExcel.xls");
+						excelFile.getAbsolutePath().lastIndexOf("/"))
+						+ "/copyExcel.xls");
 				isFileExists = true;
 				Workbook rwb = Workbook.getWorkbook(copyFile);
 				workbook = Workbook.createWorkbook(copyFile, rwb);
