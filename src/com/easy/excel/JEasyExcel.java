@@ -1,7 +1,10 @@
 package com.easy.excel;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import jxl.Cell;
 import jxl.Workbook;
@@ -137,17 +140,13 @@ public class JEasyExcel {
 	/**
 	 * 写数据到Excel 报表
 	 * 
-	 * @param sheetName
-	 *            sheet名称
-	 * @param col
-	 *           纵坐标 坐标从0开始
-	 * @param row
-	 *           横坐标 坐标从0开始
-	 * @param value
-	 *            值
+	 * @param sheetName sheet名称
+	 * @param row 行 坐标从0开始
+	 * @param col 列 坐标从0开始
+	 * @param value 值
 	 * @return false 写入失败 true 写入成功
 	 */
-	public boolean writeDate(String sheetName, int col, int row, String value) {
+	public boolean writeDate(String sheetName, int row, int col, String value) {
 		sheet = workbook.getSheet(sheetName);
 		// sheet.
 		try {
@@ -169,18 +168,13 @@ public class JEasyExcel {
 	/**
 	 * 写数据到报表
 	 * 
-	 * @param sheetIndex
-	 *            sheet坐标
-	 * @param col
-	 *            纵坐标 坐标从0开始
-	 * @param row
-	 *           
-	 *            横坐标 坐标从0开始
-	 * @param value
-	 *            值
+	 * @param sheetName sheet名称
+	 * @param row 行 坐标从0开始
+	 * @param col 列 坐标从0开始
+	 * @param value 值
 	 * @return false 写入成功 true 写入失败
 	 */
-	public boolean writeDate(int sheetIndex, int col, int row, String value) {
+	public boolean writeDate(int sheetIndex, int row,int col,  String value) {
 		sheet = workbook.getSheet(sheetIndex);
 		try {
 			sheet.setColumnView(col, 20); // 设置宽度
@@ -200,19 +194,14 @@ public class JEasyExcel {
 	/**
 	 * 写入数据到Excel 报表
 	 * 
-	 * @param sheetName
-	 *            sheetName
-	 * @param col
-	 *            纵坐标
-	 * @param row
-	 *            横坐标
-	 * @param value
-	 *            值
-	 * @param colour
-	 *            背景颜色
+	 * @param sheetName sheet名称
+	 * @param row 行 坐标从0开始
+	 * @param col 列 坐标从0开始
+	 * @param value 值
+	 * @param colour 背景颜色
 	 * @return
 	 */
-	public boolean writeDate(String sheetName, int col, int row, String value,
+	public boolean writeDate(String sheetName, int row,int col,  String value,
 			Colour colour) {
 		sheet = workbook.getSheet(sheetName);
 		// sheet.
@@ -474,6 +463,42 @@ public class JEasyExcel {
 	public void setSheet(String sheetName, String passwd) {
 		sheet = workbook.getSheet(sheetName);
 		sheet.getSettings().setPassword(passwd);
+	}
+	static class FileUtils {
+		/**
+		 * 复制单个文件
+		 * 
+		 * @param oldPath
+		 *            String 原文件路径 如：c:/fqf.txt
+		 * @param newPath
+		 *            String 复制后路径 如：f:/fqf.txt
+		 * @return boolean
+		 */
+		public static void copyFile(String oldPath, String newPath)
+		{
+			try
+			{
+				int bytesum = 0;
+				int byteread = 0;
+				File oldfile = new File(oldPath);
+				if (oldfile.exists())
+				{ // 文件存在时
+					InputStream inStream = new FileInputStream(oldPath); // 读入原文件
+					FileOutputStream fs = new FileOutputStream(newPath);
+					byte[] buffer = new byte[1444];
+					int length;
+					while ((byteread = inStream.read(buffer)) != -1)
+					{
+						bytesum += byteread; // 字节数 文件大小
+						fs.write(buffer, 0, byteread);
+					}
+					inStream.close();
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
